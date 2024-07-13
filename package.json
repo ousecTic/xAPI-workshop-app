@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@xapi/xapi": "^2.2.7",
+    "chart.js": "^4.4.3",
     "next": "14.2.5",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18"
   },
   "devDependencies": {

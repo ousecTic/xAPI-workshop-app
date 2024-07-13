@@ -4,9 +4,17 @@ import React, { useState, useEffect } from 'react';
 import { sendXAPIStatement } from '@/utils/xapiUtils';
 import Modal from '@/app/components/Modal';
 
-export default function LinkedInConnection() {
+const connectionMethods = [
+  { value: 'linkedin', label: 'LinkedIn' },
+  { value: 'email', label: 'Email' },
+  { value: 'phone', label: 'Phone Number' },
+  { value: 'other', label: 'Other' }
+];
+
+export default function ConnectionActivity() {
   const [userName, setUserName] = useState<string>('');
   const [connectedPerson, setConnectedPerson] = useState<string>('');
+  const [connectionMethod, setConnectionMethod] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -31,8 +39,8 @@ export default function LinkedInConnection() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!connectedPerson.trim()) {
-      setError('Please enter the name of the person you connected with');
+    if (!connectedPerson.trim() || !connectionMethod) {
+      setError('Please enter the name of the person you connected with and select a connection method');
       return;
     }
 
@@ -46,14 +54,19 @@ export default function LinkedInConnection() {
         display: { "en-US": "connected with" }
       },
       object: {
-        id: "http://example.com/xapi-workshop/linkedin-connection",
+        id: "http://example.com/xapi-workshop/connection-activity",
         definition: {
-          name: { "en-US": "LinkedIn Connection" },
+          name: { "en-US": "Workshop Connection Activity" },
           description: { "en-US": "Connected with another participant during the workshop" }
         }
       },
       result: {
-        response: connectedPerson
+        response: JSON.stringify({ person: connectedPerson, method: connectionMethod })
+      },
+      context: {
+        extensions: {
+          "http://example.com/xapi/extension/connection-method": connectionMethod
+        }
       }
     };
 
@@ -78,13 +91,13 @@ export default function LinkedInConnection() {
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl text-gray-800">
-      <h2 className="text-2xl font-bold mb-6">LinkedIn Connection Activity</h2>
+      <h2 className="text-2xl font-bold mb-6">Workshop Connection Activity</h2>
       <div className="mb-6">
         <h3 className="text-xl font-semibold mb-2">Instructions:</h3>
         <ol className="list-decimal list-inside space-y-2">
           <li>Find someone in the room you haven&apos;t connected with before.</li>
-          <li>Connect with them on LinkedIn, or exchange email/phone number.</li>
-          <li>Once connected, enter their first name below and submit.</li>
+          <li>Connect with them via LinkedIn, email, phone, or another method.</li>
+          <li>Once connected, enter their name and how you connected below.</li>
         </ol>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -98,8 +111,26 @@ export default function LinkedInConnection() {
             value={connectedPerson}
             onChange={(e) => setConnectedPerson(e.target.value)}
             className="w-full p-3 border rounded-md text-lg"
-            placeholder="Enter their first name"
+            placeholder="Enter their name"
           />
+        </div>
+        <div>
+          <label htmlFor="connectionMethod" className="block text-lg font-medium text-gray-700 mb-2">
+            How did you connect?
+          </label>
+          <select
+            id="connectionMethod"
+            value={connectionMethod}
+            onChange={(e) => setConnectionMethod(e.target.value)}
+            className="w-full p-3 border rounded-md text-lg"
+          >
+            <option value="">Select connection method</option>
+            {connectionMethods.map((method) => (
+              <option key={method.value} value={method.value}>
+                {method.label}
+              </option>
+            ))}
+          </select>
         </div>
         <button 
           type="submit" 

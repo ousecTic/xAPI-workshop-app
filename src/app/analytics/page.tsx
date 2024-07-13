@@ -6,6 +6,7 @@ import { EventAttendanceAnalytics } from './components/event';
 import { EmojiAnalytics } from './components/emoji';
 import { LinkedInConnectionAnalytics } from './components/linkedin';
 import { ChatboxAnalytics } from './components/chatbox';
+import { PageViewAnalytics } from "./components/pageview"
 
 export default function Analytics() {
   return (
@@ -17,6 +18,7 @@ export default function Analytics() {
       <EmojiAnalytics />
       <LinkedInConnectionAnalytics />
       <ChatboxAnalytics />
+      <PageViewAnalytics />
 
       {/* You can add more analytics components here as needed */}
     </div>

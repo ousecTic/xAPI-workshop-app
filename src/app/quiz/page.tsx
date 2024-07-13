@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '@/app/components/Modal';
 import { sendXAPIStatement } from '@/utils/xapiUtils';
+import { trackPageView } from '@/utils/pageViewTracker';
 
 export default function Quiz() {
   const [userName, setUserName] = useState<string>('');
@@ -13,6 +14,10 @@ export default function Quiz() {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    trackPageView('quiz-activity');
+  }, []);
 
   useEffect(() => {
     const storedName = localStorage.getItem('xapiUserName');

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { sendXAPIStatement } from '@/utils/xapiUtils';
 import Modal from '@/app/components/Modal';
+import { trackPageView } from '@/utils/pageViewTracker';
 
 const connectionMethods = [
   { value: 'linkedin', label: 'LinkedIn' },
@@ -18,6 +19,10 @@ export default function ConnectionActivity() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
+  useEffect(() => {
+    trackPageView('linkedin-activity');
+  }, []);
 
   useEffect(() => {
     const storedName = localStorage.getItem('xapiUserName');

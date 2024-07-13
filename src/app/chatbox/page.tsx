@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { sendXAPIStatement, getXAPIStatements } from '@/utils/xapiUtils';
 import Modal from '@/app/components/Modal';
+import { trackPageView } from '@/utils/pageViewTracker';
 
 interface Message {
   id: string;
@@ -20,6 +21,10 @@ export default function Chatbox() {
   const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
 
   const chatBoxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    trackPageView('chatbox-activity');
+  }, []);
 
   useEffect(() => {
     const storedName = localStorage.getItem('xapiUserName');

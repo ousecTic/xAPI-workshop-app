@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { sendXAPIStatement } from '@/utils/xapiUtils';
 import Modal from '@/app/components/Modal';
+import { trackPageView } from '@/utils/pageViewTracker';
 
 const emojis = [
   { emoji: '😊', mood: 'Happy' },
@@ -18,6 +19,10 @@ export default function EmojiActivity() {
   const [error, setError] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
+  useEffect(() => {
+    trackPageView('emoji-activity');
+  }, []);
 
   useEffect(() => {
     const storedName = localStorage.getItem('xapiUserName');

@@ -10,7 +10,7 @@ import Chatbox from './components/chatbox';
 import PageView from "./components/pageview"
 import Task from "./components/taskCompletion"
 
-export default function () {
+export default function WorkshopDashboard() {
   const { error, filterStatements } = useXAPIData();
 
   if (error) {

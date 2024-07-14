@@ -22,7 +22,7 @@ const chartOptions = {
   },
 };
 
-export default function EmojiAnalytics({ data }: Props) {
+export default function Emoji({ data }: Props) {
   const emotions = data.reduce((acc, statement) => {
     const emotion = statement.result.response;
     acc[emotion] = (acc[emotion] || 0) + 1;
@@ -46,7 +46,7 @@ export default function EmojiAnalytics({ data }: Props) {
   };
 
   return (
-    <div className="mb-8">
+    <div className="mb-8 text-gray-800">
       <h2 className="text-2xl font-semibold mb-4">Participant Emotions</h2>
       <Pie options={chartOptions} data={chartData} />
     </div>

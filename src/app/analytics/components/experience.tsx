@@ -31,7 +31,7 @@ const chartOptions = {
   }
 };
 
-export default function ExperienceLevelAnalytics({ data }: Props) {
+export default function ExperienceLevel({ data }: Props) {
   const experienceLevels = data.reduce((acc, statement) => {
     const level = statement.result.response;
     acc[level] = (acc[level] || 0) + 1;
@@ -53,7 +53,7 @@ export default function ExperienceLevelAnalytics({ data }: Props) {
   };
 
   return (
-    <div className="mb-8">
+    <div className="mb-8 text-gray-800">
       <h2 className="text-2xl font-semibold mb-4">xAPI Experience Levels</h2>
       <Bar options={chartOptions} data={chartData} />
     </div>

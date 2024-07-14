@@ -22,7 +22,7 @@ const chartOptions = {
   },
 };
 
-export default function LinkedInConnectionAnalytics({ data }: Props) {
+export default function LinkedInConnection({ data }: Props) {
   const connectionMethods = data.reduce((acc, statement) => {
     const method = JSON.parse(statement.result.response).method;
     acc[method] = (acc[method] || 0) + 1;
@@ -43,7 +43,7 @@ export default function LinkedInConnectionAnalytics({ data }: Props) {
   };
 
   return (
-    <div className="mb-8">
+    <div className="mb-8 text-gray-800">
       <h2 className="text-2xl font-semibold mb-4">LinkedIn Connection Methods</h2>
       <Pie options={chartOptions} data={chartData} />
     </div>

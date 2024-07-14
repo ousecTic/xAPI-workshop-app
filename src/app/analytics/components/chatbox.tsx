@@ -23,7 +23,7 @@ const chartOptions = {
   },
 };
 
-export default function ChatboxAnalytics({ data }: Props) {
+export default function Chatbox({ data }: Props) {
   const participantCounts = data.reduce((acc, statement) => {
     const name = statement.actor.name;
     acc[name] = (acc[name] || 0) + 1;
@@ -44,7 +44,7 @@ export default function ChatboxAnalytics({ data }: Props) {
   };
 
   return (
-    <div className="mb-8">
+    <div className="mb-8 text-gray-800">
       <h2 className="text-2xl font-semibold mb-4">Most Active Chat Participants</h2>
       <Bar options={chartOptions} data={chartData} />
     </div>

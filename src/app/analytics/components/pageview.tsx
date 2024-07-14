@@ -23,7 +23,7 @@ const chartOptions = {
   },
 };
 
-export default function PageViewAnalytics({ data }: Props) {
+export default function PageView({ data }: Props) {
   const pageCounts = data.reduce((acc, statement) => {
     const pageId = statement.object.id;
     const pageName = pageId.split('/').pop() || pageId;
@@ -45,7 +45,7 @@ export default function PageViewAnalytics({ data }: Props) {
   };
 
   return (
-    <div className="mb-8">
+    <div className="mb-8 text-gray-800">
       <h2 className="text-2xl font-semibold mb-4">Most Viewed Pages</h2>
       <Bar options={chartOptions} data={chartData} />
     </div>

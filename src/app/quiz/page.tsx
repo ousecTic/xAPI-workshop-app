@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Modal from '@/app/components/Modal';
 import { sendXAPIStatement } from '@/utils/xapiUtils';
-import { trackPageView } from '@/utils/pageViewTracker';
+import { trackPageView, trackTaskCompleted } from '@/utils/pageViewTracker';
 
 export default function Quiz() {
   const [userName, setUserName] = useState<string>('');
@@ -17,6 +17,7 @@ export default function Quiz() {
 
   useEffect(() => {
     trackPageView('quiz-activity');
+    console.log("render")
   }, []);
 
   useEffect(() => {
@@ -83,6 +84,7 @@ export default function Quiz() {
     const experienceSuccess = await sendXAPIStatement(experienceStatement);
     const icicleEventsSuccess = await sendXAPIStatement(icicleEventsStatement);
 
+    trackTaskCompleted('quiz-activity');
     return experienceSuccess && icicleEventsSuccess;
   };
 

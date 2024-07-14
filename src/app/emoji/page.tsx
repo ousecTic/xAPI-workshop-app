@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { sendXAPIStatement } from '@/utils/xapiUtils';
 import Modal from '@/app/components/Modal';
-import { trackPageView } from '@/utils/pageViewTracker';
+import { trackPageView, trackTaskCompleted } from '@/utils/pageViewTracker';
+import { usePageView } from '@/hooks/usePageView';
 
 const emojis = [
   { emoji: '😊', mood: 'Happy' },
@@ -76,6 +77,8 @@ export default function EmojiActivity() {
     } else {
       setError('Failed to submit your response. Please try again.');
     }
+
+    trackTaskCompleted('emoji-activity');
   };
 
   if (isSubmitted) {

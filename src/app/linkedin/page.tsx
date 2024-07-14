@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { sendXAPIStatement } from '@/utils/xapiUtils';
 import Modal from '@/app/components/Modal';
-import { trackPageView } from '@/utils/pageViewTracker';
+import { trackPageView, trackTaskCompleted } from '@/utils/pageViewTracker';
 
 const connectionMethods = [
   { value: 'linkedin', label: 'LinkedIn' },
@@ -82,6 +82,8 @@ export default function ConnectionActivity() {
     } else {
       setError('Failed to submit your connection. Please try again.');
     }
+
+    trackTaskCompleted('linkedin-activity');
   };
 
   if (isSubmitted) {

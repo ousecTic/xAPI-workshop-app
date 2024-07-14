@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { sendXAPIStatement, getXAPIStatements } from '@/utils/xapiUtils';
 import Modal from '@/app/components/Modal';
-import { trackPageView } from '@/utils/pageViewTracker';
+import { trackPageView, trackTaskCompleted } from '@/utils/pageViewTracker';
 
 interface Message {
   id: string;
@@ -34,7 +34,7 @@ export default function Chatbox() {
       setIsModalOpen(true);
     }
 
-    const pollInterval = setInterval(pollMessages, 1000); // Poll every 5 seconds
+    const pollInterval = setInterval(pollMessages, 5000); // Poll every 5 seconds
 
     return () => clearInterval(pollInterval);
   }, []);
@@ -110,6 +110,8 @@ export default function Chatbox() {
     } else {
       setError('Failed to send message. Please try again.');
     }
+
+    trackTaskCompleted('chatbox-activity');
   };
 
   return (

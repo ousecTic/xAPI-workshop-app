@@ -113,7 +113,7 @@ export function LinkedInConnectionAnalytics() {
 
   useEffect(() => {
     fetchData();
-    const intervalId = setInterval(fetchData, 5000); // Fetch every 5 seconds
+    const intervalId = setInterval(fetchData, 30000); // Fetch every 5 seconds
     return () => clearInterval(intervalId);
   }, []);
 

@@ -7,6 +7,7 @@ import { EmojiAnalytics } from './components/emoji';
 import { LinkedInConnectionAnalytics } from './components/linkedin';
 import { ChatboxAnalytics } from './components/chatbox';
 import { PageViewAnalytics } from "./components/pageview"
+import {TaskAnalytics} from "./components/taskCompletion"
 
 export default function Analytics() {
   return (
@@ -19,6 +20,7 @@ export default function Analytics() {
       <LinkedInConnectionAnalytics />
       <ChatboxAnalytics />
       <PageViewAnalytics />
+      <TaskAnalytics />
 
       {/* You can add more analytics components here as needed */}
     </div>

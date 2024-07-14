@@ -1,14 +1,9 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { XAPIStatement } from '@/hooks/useXAPIData';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-interface XAPIStatement {
-  result: {
-    response: string;
-  };
-}
 
 interface Props {
   data: XAPIStatement[];
@@ -37,10 +32,8 @@ const chartOptions = {
 };
 
 export default function ExperienceLevelAnalytics({ data }: Props) {
-    console.log(data)
   const experienceLevels = data.reduce((acc, statement) => {
     const level = statement.result.response;
-    console.log(level)
     acc[level] = (acc[level] || 0) + 1;
     return acc;
   }, {} as { [key: string]: number });

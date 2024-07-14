@@ -1,14 +1,9 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { XAPIStatement } from '@/hooks/useXAPIData';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-interface XAPIStatement {
-  result: {
-    response: string;
-  };
-}
 
 interface Props {
   data: XAPIStatement[];
@@ -42,7 +37,7 @@ export default function EventAttendanceAnalytics({ data }: Props) {
         attendanceCounts['1'] || 0,
         attendanceCounts['2'] || 0,
         attendanceCounts['3'] || 0,
-        attendanceCounts['4+'] || 0
+        attendanceCounts['4-'] || 0
       ],
       backgroundColor: 'rgba(54, 162, 235, 0.6)',
     }]

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getXAPIStatements } from '../utils/xapiUtils';
 
-interface XAPIStatement {
+export interface XAPIStatement {
   actor: {
     name: string;
   };

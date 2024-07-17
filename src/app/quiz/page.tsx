@@ -1,16 +1,13 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '@/app/components/Modal';
 import { sendXAPIStatement } from '@/utils/xapiUtils';
 import { trackPageView, trackTaskCompleted } from '@/utils/pageViewTracker';
 
 export default function Quiz() {
   const [userName, setUserName] = useState<string>('');
-  const [answers, setAnswers] = useState({
-    experience: '',
-    icicleEvents: ''
-  });
+  const [experience, setExperience] = useState("");
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -56,42 +53,20 @@ export default function Quiz() {
         }
       },
       result: {
-        response: answers.experience
-      }
-    };
-
-    const icicleEventsStatement = {
-      actor: {
-        name: userName,
-        mbox: `mailto:${userName}@example.com`
-      },
-      verb: {
-        id: "http://adlnet.gov/expapi/verbs/responded",
-        display: { "en-US": "responded" }
-      },
-      object: {
-        id: "http://example.com/xapi-workshop/icicle-events",
-        definition: {
-          name: { "en-US": "ICICLE Event Attendance" },
-          description: { "en-US": "The number of ICICLE events the participant has attended" }
-        }
-      },
-      result: {
-        response: answers.icicleEvents
+        response: experience
       }
     };
 
     const experienceSuccess = await sendXAPIStatement(experienceStatement);
-    const icicleEventsSuccess = await sendXAPIStatement(icicleEventsStatement);
 
     trackTaskCompleted('quiz-activity');
-    return experienceSuccess && icicleEventsSuccess;
+    return experienceSuccess 
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!answers.experience || !answers.icicleEvents) {
-      setError('Please answer both questions');
+    if (!experience) {
+      setError('Please answer question');
       return;
     }
 
@@ -124,8 +99,8 @@ export default function Quiz() {
           </label>
           <select
             id="experience"
-            value={answers.experience}
-            onChange={(e) => setAnswers({...answers, experience: e.target.value})}
+            value={experience}
+            onChange={(e) => setExperience(e.target.value)}
             className="w-full p-3 border rounded-md text-lg"
           >
             <option value="">Select your experience level</option>
@@ -133,23 +108,6 @@ export default function Quiz() {
             <option value="Intermediate">Intermediate - I have some experience with xAPI</option>
             <option value="Advanced">Advanced - I&apos;m very familiar with xAPI</option>
             <option value="Expert">Expert - I work with xAPI regularly</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="icicleEvents" className="block text-lg font-medium text-gray-700 mb-2">
-            How many times have you attended an ICICLE event?
-          </label>
-          <select
-            id="icicleEvents"
-            value={answers.icicleEvents}
-            onChange={(e) => setAnswers({...answers, icicleEvents: e.target.value})}
-            className="w-full p-3 border rounded-md text-lg"
-          >
-            <option value="">Select the number of events</option>
-            <option value="1">This is my first time</option>
-            <option value="2">This is my second time</option>
-            <option value="3">This is my third time</option>
-            <option value="4-">This is my fourth time</option>
           </select>
         </div>
         <button 

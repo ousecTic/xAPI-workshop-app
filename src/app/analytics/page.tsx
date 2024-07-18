@@ -8,6 +8,7 @@ import LinkedInConnection from './components/linkedin';
 import Chatbox from './components/chatbox';
 import PageView from "./components/pageview"
 import Task from "./components/taskCompletion"
+import VideoActivityAnalytics from './components/video';
 
 export default function WorkshopDashboard() {
   const { error, filterStatements } = useXAPIData();
@@ -18,6 +19,7 @@ export default function WorkshopDashboard() {
 
   const beforeEmojiData = filterStatements("http://adlnet.gov/expapi/verbs/responded", "http://example.com/xapi-workshop/mood/before");
   const afterEmojiData = filterStatements("http://adlnet.gov/expapi/verbs/responded", "http://example.com/xapi-workshop/mood/after");
+  const videoActivityData = filterStatements("http://adlnet.gov/expapi/verbs/answered", "http://example.com/xapi-workshop/video-question");
 
   return (
     <div className="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl">
@@ -26,6 +28,7 @@ export default function WorkshopDashboard() {
       <EmojiComparison beforeData={beforeEmojiData} afterData={afterEmojiData} />
       <LinkedInConnection data={filterStatements("http://adlnet.gov/expapi/verbs/connected", "http://example.com/xapi-workshop/connection-activity")} />
       <Chatbox data={filterStatements("http://adlnet.gov/expapi/verbs/commented", "http://example.com/xapi-workshop/chatbox")} />
+      <VideoActivityAnalytics data={videoActivityData} />
       <PageView data={filterStatements("http://id.tincanapi.com/verb/viewed")} />
       <Task data={filterStatements("http://adlnet.gov/expapi/verbs/completed")} />
     </div>

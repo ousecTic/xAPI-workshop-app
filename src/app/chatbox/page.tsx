@@ -117,6 +117,15 @@ export default function Chatbox() {
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl text-gray-800">
       <h2 className="text-2xl font-bold mb-6">Workshop Chatbox</h2>
+
+      <div className="mb-4 p-4 border rounded-md bg-blue-50">
+        <p className="font-bold text-lg">Chatbox Activity Rules:</p>
+        <div className="text-gray-700 mt-2">
+          <p className="mb-2">1. Share a fact about yourself that you typically don't get to share with others.</p>
+          <p className="mb-2">2. After sharing, you can continue to engage in the conversation by reading and responding to other participants' messages.</p>
+        </div>
+      </div>
+
       <div 
         ref={chatBoxRef}
         className="border rounded-md p-4 h-80 overflow-y-auto mb-4"

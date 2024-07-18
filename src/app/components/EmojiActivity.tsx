@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import { sendXAPIStatement } from '@/utils/xapiUtils';
 import Modal from '@/app/components/Modal';
@@ -19,8 +21,8 @@ interface EmojiActivityProps {
 export default function EmojiActivity({ activityType }: EmojiActivityProps) {
   const [userName, setUserName] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   
   useEffect(() => {
     if(activityType === "before"){
@@ -28,30 +30,22 @@ export default function EmojiActivity({ activityType }: EmojiActivityProps) {
     }else{
         trackPageView('emoji-after-activity');
     }
-  }, []);
-
-  useEffect(() => {
     const storedName = localStorage.getItem('xapiUserName');
     if (storedName) {
       setUserName(storedName);
-    } else {
+    }else {
       setIsModalOpen(true);
     }
-  }, []);
+  }, [activityType]);
 
-  const handleSubmitName = () => {
-    if (userName.trim()) {
-      localStorage.setItem('xapiUserName', userName);
-      setIsModalOpen(false);
-    } else {
-      setError('Please enter your name');
-    }
+  const handleNameSubmit = (name: string) => {
+    setUserName(name);
+    setIsModalOpen(false);
   };
 
   const handleEmojiClick = async (mood: string) => {
     if (!userName) {
       setError('Please enter your name first.');
-      setIsModalOpen(true);
       return;
     }
 
@@ -97,6 +91,7 @@ export default function EmojiActivity({ activityType }: EmojiActivityProps) {
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl text-gray-800">
+      <Modal isOpen={isModalOpen} onNameSubmit={handleNameSubmit} />  
       <h2 className="text-2xl font-bold mb-6 text-center">
         How are you feeling {activityType === 'before' ? 'now' : 'after the activities'}?
       </h2>
@@ -114,23 +109,6 @@ export default function EmojiActivity({ activityType }: EmojiActivityProps) {
         ))}
       </div>
       {error && <p className="mt-4 text-red-600 text-center">{error}</p>}
-
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <h2 className="text-xl font-bold mb-4">Enter Your Name</h2>
-        <input
-          type="text"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-          className="w-full p-3 border rounded-md text-lg"
-          placeholder="Your name"
-        />
-        <button 
-          onClick={handleSubmitName} 
-          className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-lg w-full"
-        >
-          Submit
-        </button>
-      </Modal>
     </div>
   );
 }

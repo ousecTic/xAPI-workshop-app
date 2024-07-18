@@ -14,25 +14,17 @@ export default function Quiz() {
 
   useEffect(() => {
     trackPageView('quiz-activity');
-    console.log("render")
-  }, []);
-
-  useEffect(() => {
     const storedName = localStorage.getItem('xapiUserName');
     if (storedName) {
       setUserName(storedName);
-    } else {
+    }else {
       setIsModalOpen(true);
     }
   }, []);
 
-  const handleSubmitName = () => {
-    if (userName.trim()) {
-      localStorage.setItem('xapiUserName', userName);
-      setIsModalOpen(false);
-    } else {
-      setError('Please enter your name');
-    }
+  const handleNameSubmit = (name: string) => {
+    setUserName(name);
+    setIsModalOpen(false);
   };
 
   const sendXAPIStatements = async () => {
@@ -60,13 +52,13 @@ export default function Quiz() {
     const experienceSuccess = await sendXAPIStatement(experienceStatement);
 
     trackTaskCompleted('quiz-activity');
-    return experienceSuccess 
+    return experienceSuccess;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!experience) {
-      setError('Please answer question');
+      setError('Please answer the question');
       return;
     }
 
@@ -75,22 +67,22 @@ export default function Quiz() {
       setSubmitted(true);
       setError('');
     } else {
-      setError('Failed to submit your responses. Please try again.');
+      setError('Failed to submit your response. Please try again.');
     }
   };
 
   if (submitted) {
     return (
       <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl text-gray-800 text-center">
-        <h2 className="text-2xl font-bold mb-4">Thank you for your responses!</h2>
+        <h2 className="text-2xl font-bold mb-4">Thank you for your response!</h2>
         <p className="text-lg mb-4">You&apos;re ready to move to the next activity.</p>
-        {/* Add a button or link to the next activity here if needed */}
       </div>
     );
   }
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl text-gray-800">
+      <Modal isOpen={isModalOpen} onNameSubmit={handleNameSubmit} />
       <h2 className="text-2xl font-bold mb-6">xAPI Workshop Quiz</h2>
       <form onSubmit={handleSubmit} className="space-y-8">
         <div>
@@ -118,23 +110,6 @@ export default function Quiz() {
         </button>
       </form>
       {error && <p className="mt-4 text-red-600 text-lg">{error}</p>}
-
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <h2 className="text-xl font-bold mb-4">Enter Your Name</h2>
-        <input
-          type="text"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-          className="w-full p-3 border rounded-md text-lg"
-          placeholder="Your name"
-        />
-        <button 
-          onClick={handleSubmitName} 
-          className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-lg w-full"
-        >
-          Submit
-        </button>
-      </Modal>
     </div>
   );
 }

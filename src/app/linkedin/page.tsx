@@ -22,24 +22,17 @@ export default function ConnectionActivity() {
 
   useEffect(() => {
     trackPageView('linkedin-activity');
-  }, []);
-
-  useEffect(() => {
     const storedName = localStorage.getItem('xapiUserName');
     if (storedName) {
       setUserName(storedName);
-    } else {
+    }else {
       setIsModalOpen(true);
     }
   }, []);
 
-  const handleSubmitName = () => {
-    if (userName.trim()) {
-      localStorage.setItem('xapiUserName', userName);
-      setIsModalOpen(false);
-    } else {
-      setError('Please enter your name');
-    }
+  const handleNameSubmit = (name: string) => {
+    setUserName(name);
+    setIsModalOpen(false);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -98,6 +91,7 @@ export default function ConnectionActivity() {
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl text-gray-800">
+      <Modal isOpen={isModalOpen} onNameSubmit={handleNameSubmit} />
       <h2 className="text-2xl font-bold mb-6">Workshop Connection Activity</h2>
       <div className="mb-6">
         <h3 className="text-xl font-semibold mb-2">Instructions:</h3>
@@ -147,23 +141,6 @@ export default function ConnectionActivity() {
         </button>
       </form>
       {error && <p className="mt-4 text-red-600 text-lg">{error}</p>}
-
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <h2 className="text-xl font-bold mb-4">Enter Your Name</h2>
-        <input
-          type="text"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-          className="w-full p-3 border rounded-md text-lg"
-          placeholder="Your name"
-        />
-        <button 
-          onClick={handleSubmitName} 
-          className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-lg w-full"
-        >
-          Submit
-        </button>
-      </Modal>
     </div>
   );
 }

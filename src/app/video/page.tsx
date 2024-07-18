@@ -3,6 +3,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import { sendXAPIStatement } from '@/utils/xapiUtils';
+import Modal from '../components/Modal';
 
 const videoUrl = 'https://www.youtube-nocookie.com/embed/BB49x_uMlGA';
 
@@ -37,6 +38,7 @@ export default function VideoActivity() {
   const [rewatchCount, setRewatchCount] = useState(0);
   const [pausePositions, setPausePositions] = useState<number[]>([]);
   const [isClient, setIsClient] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const playerRef = useRef<ReactPlayer>(null);
 
   useEffect(() => {
@@ -44,8 +46,15 @@ export default function VideoActivity() {
     const storedName = localStorage.getItem('xapiUserName');
     if (storedName) {
       setUserName(storedName);
+    }else{
+      setIsModalOpen(true)
     }
   }, []);
+
+  const handleNameSubmit = (name: string) => {
+    setUserName(name);
+    setIsModalOpen(false);
+  };
 
   const handleVideoStart = useCallback(() => {
     if (hasWatched) {
@@ -135,6 +144,7 @@ export default function VideoActivity() {
 
   return (
     <div className="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl">
+      <Modal isOpen={isModalOpen} onNameSubmit={handleNameSubmit} />
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Video Activity</h2>
       
         <div className="mb-4 p-4 bg-gray-200 rounded-lg border border-gray-300">

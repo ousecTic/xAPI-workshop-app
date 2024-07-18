@@ -9,6 +9,7 @@ import Chatbox from './components/chatbox';
 import PageView from "./components/pageview"
 import Task from "./components/taskCompletion"
 import VideoActivityAnalytics from './components/video';
+import VideoPauseAnalytics from './components/videoPause';
 
 export default function WorkshopDashboard() {
   const { error, filterStatements } = useXAPIData();
@@ -22,15 +23,46 @@ export default function WorkshopDashboard() {
   const videoActivityData = filterStatements("http://adlnet.gov/expapi/verbs/answered", "http://example.com/xapi-workshop/video-question");
 
   return (
-    <div className="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl">
+    <div className="max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-xl">
       <h1 className="text-3xl font-bold mb-6">Workshop Dashboard</h1>
-      <ExperienceLevel data={filterStatements("http://adlnet.gov/expapi/verbs/responded", "http://example.com/xapi-workshop/xapi-experience")} />
-      <EmojiComparison beforeData={beforeEmojiData} afterData={afterEmojiData} />
-      <LinkedInConnection data={filterStatements("http://adlnet.gov/expapi/verbs/connected", "http://example.com/xapi-workshop/connection-activity")} />
-      <Chatbox data={filterStatements("http://adlnet.gov/expapi/verbs/commented", "http://example.com/xapi-workshop/chatbox")} />
-      <VideoActivityAnalytics data={videoActivityData} />
-      <PageView data={filterStatements("http://id.tincanapi.com/verb/viewed")} />
-      <Task data={filterStatements("http://adlnet.gov/expapi/verbs/completed")} />
+      
+      {/* Main activities above the fold */}
+      <div className="grid grid-cols-2 gap-6 mb-12">
+        <div className="col-span-1">
+          <ExperienceLevel data={filterStatements("http://adlnet.gov/expapi/verbs/responded", "http://example.com/xapi-workshop/xapi-experience")} />
+        </div>
+        <div className="col-span-1">
+          <VideoActivityAnalytics data={videoActivityData} />
+        </div>
+        <div className="col-span-1">
+          <Chatbox data={filterStatements("http://adlnet.gov/expapi/verbs/commented", "http://example.com/xapi-workshop/chatbox")} />
+        </div>
+        <div className="col-span-1">
+          <LinkedInConnection data={filterStatements("http://adlnet.gov/expapi/verbs/connected", "http://example.com/xapi-workshop/connection-activity")} />
+        </div>
+      </div>
+      
+      {/* Divider */}
+      <hr className="my-8 border-gray-300" />
+      
+      {/* Additional analytics below the fold */}
+      <div className="mt-12">
+        <h2 className="text-2xl font-bold mb-6">Additional Insights</h2>
+        <div className="grid grid-cols-2 gap-6">
+          <div className="col-span-2">
+            <VideoPauseAnalytics data={videoActivityData} />
+          </div>
+          <div className="col-span-2">
+            <EmojiComparison beforeData={beforeEmojiData} afterData={afterEmojiData} />
+          </div>
+          <div className="col-span-1">
+            <PageView data={filterStatements("http://id.tincanapi.com/verb/viewed")} />
+          </div>
+          <div className="col-span-1">
+            <Task data={filterStatements("http://adlnet.gov/expapi/verbs/completed")} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -32,7 +32,7 @@ export default function Chatbox({ data }: Props) {
 
   const sortedParticipants = Object.entries(participantCounts)
     .sort(([, a], [, b]) => b - a)
-    .slice(0, 10);
+    .slice(0, 3);
 
   const chartData = {
     labels: sortedParticipants.map(([name]) => name),

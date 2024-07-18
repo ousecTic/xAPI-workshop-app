@@ -18,7 +18,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onNameSubmit }) => {
 
   const handleSubmitName = () => {
     if (userName.trim()) {
-      localStorage.setItem('xapiUserName', userName);
+      const sanitizedUserName = userName.replace(/\s+/g, '_');
+      localStorage.setItem('xapiUserName', sanitizedUserName);
       onNameSubmit(userName);
       setError('');
     } else {

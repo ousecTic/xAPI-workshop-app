@@ -27,14 +27,15 @@ const chartOptions = (title: string) => ({
   },
 });
 
-const colors = [
-  'rgba(255, 99, 132, 0.6)',
-  'rgba(54, 162, 235, 0.6)',
-  'rgba(255, 206, 86, 0.6)',
-  'rgba(75, 192, 192, 0.6)',
-  'rgba(153, 102, 255, 0.6)',
-  'rgba(255, 159, 64, 0.6)',
-];
+// Fixed color mapping for emotions
+const emotionColors : { [key: string]: string } = {
+  'Happy': 'rgba(255, 206, 86, 0.6)',   // Yellow
+  'Neutral': 'rgba(169, 169, 169, 0.6)', // Gray
+  'Sad': 'rgba(54, 162, 235, 0.6)',     // Blue
+  'Tired': 'rgba(75, 192, 192, 0.6)',   // Teal
+  'Curious': 'rgba(153, 102, 255, 0.6)', // Purple
+  'Excited': 'rgba(255, 99, 132, 0.6)',  // Pink
+};
 
 const processEmotions = (data: XAPIStatement[]) => {
   const emotions : EmotionSet = {};
@@ -45,15 +46,21 @@ const processEmotions = (data: XAPIStatement[]) => {
   return emotions;
 };
 
-const createChartData = (emotions: { [key: string]: number }) => ({
-  labels: Object.keys(emotions),
-  datasets: [
-    {
-      data: Object.values(emotions),
-      backgroundColor: colors,
-    },
-  ],
-});
+const createChartData = (emotions: EmotionSet) => {
+  const labels = Object.keys(emotions);
+  const data = Object.values(emotions);
+  const backgroundColor = labels.map(emotion => emotionColors[emotion] || 'rgba(200, 200, 200, 0.6)');
+
+  return {
+    labels,
+    datasets: [
+      {
+        data,
+        backgroundColor,
+      },
+    ],
+  };
+};
 
 export default function EmojiComparison({ beforeData, afterData }: Props) {
   const beforeEmotions = processEmotions(beforeData);

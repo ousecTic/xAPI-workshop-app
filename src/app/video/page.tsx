@@ -137,14 +137,14 @@ export default function VideoActivity() {
     <div className="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Video Activity</h2>
       
-      <div className="mb-4 p-4 bg-gray-200 rounded-lg border border-gray-300">
+        <div className="mb-4 p-4 bg-gray-200 rounded-lg border border-gray-300">
         <h3 className="text-lg font-semibold mb-2 text-gray-800">Instructions:</h3>
         <ol className="list-decimal list-inside space-y-1 text-gray-700">
-          <li>Watch the video carefully.</li>
-          <li>Select your answer from the options below.</li>
-          <li>Click the "Submit Answer" button to check your response.</li>
+            <li>Watch the video carefully.</li>
+            <li>Select your answer from the options below.</li>
+            <li>Click the &quot;Submit Answer&quot; button to check your response.</li>
         </ol>
-      </div>
+        </div>
 
       <div className="player-wrapper mb-6" style={{ position: 'relative', paddingTop: '56.25%' }}>
         {isClient && (

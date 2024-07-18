@@ -1,9 +1,7 @@
-'use client'
-
 import React, { useState, useEffect } from 'react';
 import { sendXAPIStatement } from '@/utils/xapiUtils';
 import Modal from '@/app/components/Modal';
-import { trackPageView, trackTaskCompleted } from '@/utils/pageViewTracker';
+import { trackTaskCompleted } from '@/utils/pageViewTracker';
 
 const emojis = [
   { emoji: '😊', mood: 'Happy' },
@@ -14,15 +12,15 @@ const emojis = [
   { emoji: '🤩', mood: 'Excited' }
 ];
 
-export default function EmojiActivity() {
+interface EmojiActivityProps {
+  activityType: 'before' | 'after';
+}
+
+export default function EmojiActivity({ activityType }: EmojiActivityProps) {
   const [userName, setUserName] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-
-  useEffect(() => {
-    trackPageView('emoji-activity');
-  }, []);
 
   useEffect(() => {
     const storedName = localStorage.getItem('xapiUserName');
@@ -59,10 +57,10 @@ export default function EmojiActivity() {
         display: { "en-US": "responded" }
       },
       object: {
-        id: "http://example.com/xapi-workshop/mood",
+        id: `http://example.com/xapi-workshop/mood/${activityType}`,
         definition: {
-          name: { "en-US": "Current Mood" },
-          description: { "en-US": "The participant&apos;s current mood represented by an emoji" }
+          name: { "en-US": `${activityType.charAt(0).toUpperCase() + activityType.slice(1)} Activity Mood` },
+          description: { "en-US": `The participant's mood ${activityType} the activity, represented by an emoji` }
         }
       },
       result: {
@@ -73,11 +71,10 @@ export default function EmojiActivity() {
     const success = await sendXAPIStatement(statement);
     if (success) {
       setIsSubmitted(true);
+      trackTaskCompleted(`emoji-activity-${activityType}`);
     } else {
       setError('Failed to submit your response. Please try again.');
     }
-
-    trackTaskCompleted('emoji-activity');
   };
 
   if (isSubmitted) {
@@ -92,7 +89,9 @@ export default function EmojiActivity() {
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl text-gray-800">
-      <h2 className="text-2xl font-bold mb-6 text-center">How are you feeling today?</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        How are you feeling {activityType === 'before' ? 'now' : 'after the activities'}?
+      </h2>
       <p className="text-center text-lg mb-4">Click on an emoji to select your current mood</p>
       <div className="grid grid-cols-3 gap-4">
         {emojis.map(({ emoji, mood }) => (

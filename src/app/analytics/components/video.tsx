@@ -35,6 +35,10 @@ export default function VideoActivityAnalytics({ data }: Props) {
     return acc;
   }, {} as { [response: string]: number });
 
+  // Calculate total and correct responses
+  const totalResponses = Object.values(responseData).reduce((sum, count) => sum + count, 0);
+  const correctResponses = responseData['a'] || 0; // Assuming 'c' (7 points) is the correct answer
+  const correctPercentage = totalResponses > 0 ? (correctResponses / totalResponses * 100).toFixed(2) : '0.00';
 
   // Prepare chart data for responses
   const responseChartData = {
@@ -54,8 +58,13 @@ export default function VideoActivityAnalytics({ data }: Props) {
   return (
     <div className="mb-8 text-gray-800">
       <h2 className="text-2xl font-semibold mb-4">Video Activity Analytics</h2>
-      <div>
+      <div className="mb-4">
         <Bar options={{...chartOptions, plugins: {...chartOptions.plugins, title: {display: true, text: 'User Responses'}}}} data={responseChartData} />
+      </div>
+      <div className="bg-white p-4 rounded-lg shadow">
+        <h3 className="text-xl font-semibold mb-2">Response Statistics</h3>
+        <p className="text-lg">Total Responses: {totalResponses}</p>
+        <p className="text-lg">Correct Percentage: {correctPercentage}%</p>
       </div>
     </div>
   );

@@ -73,8 +73,11 @@ export default function Quiz({ data }: Props) {
   return (
     <div className="mb-8 text-gray-800">
       <h2 className="text-2xl font-semibold mb-4">xAPI Terminology Quiz Analysis</h2>
-      <Bar options={chartOptions} data={chartData} />
-      <div className="mt-6 space-y-2">
+      <div className="mb-4">
+        <Bar options={chartOptions} data={chartData} />
+      </div>
+      <div className="bg-white p-4 rounded-lg shadow">
+      <h3 className="text-xl font-semibold mb-2">Response Statistics</h3>
         <p className="text-lg">Total Responses: {totalResponses}</p>
         <p className="text-lg">Correct Responses: {correctResponses} ({totalResponses > 0 ? ((correctResponses / totalResponses) * 100).toFixed(2) : 0}%)</p>
       </div>

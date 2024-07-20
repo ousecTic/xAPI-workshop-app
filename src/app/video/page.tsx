@@ -56,12 +56,6 @@ export default function VideoActivity() {
     setIsModalOpen(false);
   };
 
-  const handleVideoStart = useCallback(() => {
-    if (hasWatched) {
-      setRewatchCount(prevCount => prevCount + 1);
-    }
-  }, [hasWatched]);
-
   const handleVideoEnd = useCallback(() => {
     if (!hasWatched) {
       setHasWatched(true);
@@ -82,6 +76,10 @@ export default function VideoActivity() {
           }
         }
       });
+    }
+
+    if (hasWatched) {
+      setRewatchCount(prevCount => prevCount + 1);
     }
   }, [hasWatched, userName]);
 
@@ -166,7 +164,6 @@ export default function VideoActivity() {
             height="100%"
             style={{ position: 'absolute', top: 0, left: 0 }}
             controls={true}
-            onStart={handleVideoStart}
             onEnded={handleVideoEnd}
             onPause={handlePause}
             config={{

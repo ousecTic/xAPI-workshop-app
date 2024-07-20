@@ -80,7 +80,7 @@ export default function Quiz() {
         <h2 className="text-2xl font-bold mb-4">Thank you for your response!</h2>
         <p className="text-lg mb-4">The correct answer is: Experience API.</p>
         <p className="text-lg mb-4">xAPI stands for Experience API, which reflects its purpose of tracking and analyzing various learning experiences.</p>
-        <p className="text-lg">You're ready to move to the next activity.</p>
+        <p className="text-lg">You&apos;re ready to move to the next activity.</p>
       </div>
     );
   }

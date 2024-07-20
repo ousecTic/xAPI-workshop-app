@@ -99,9 +99,10 @@ export default function ConnectionActivity() {
       <div className="mb-6">
         <h3 className="text-xl font-semibold mb-2">Instructions:</h3>
         <ol className="list-decimal list-inside space-y-2">
-          <li>Find someone in the room you haven&apos;t connected with before.</li>
-          <li>Connect with them via LinkedIn, email, phone, or another method.</li>
-          <li>Once connected, enter their name and how you connected below.</li>
+          <li>Find someone you haven&apos;t met before.</li>
+          <li>Introduce yourself and learn about them.</li>
+          <li>Connect via LinkedIn, email, phone, or another method.</li>
+          <li>Enter their name and how you connected below.</li>
         </ol>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">

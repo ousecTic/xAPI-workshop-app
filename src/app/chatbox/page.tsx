@@ -118,8 +118,8 @@ export default function Chatbox() {
       <div className="mb-4 p-4 border rounded-md bg-blue-50">
         <p className="font-bold text-lg">Chatbox Activity Rules:</p>
         <div className="text-gray-700 mt-2">
-        <p className="mb-2">1. Share a fact about yourself that you typically don&apos;t get to share with others.</p>
-        <p className="mb-2">2. After sharing, you can continue to engage in the conversation by reading and responding to other participants&apos; messages.</p>
+        <p className="mb-2">1. Introduce yourself with your name, profession, and what you hope to gain from this workshop.</p>
+        <p className="mb-2">2. (Optional) Respond to at least one other participant&apos;s introduction to find common interests or goals.</p>
         </div>
       </div>
 

@@ -21,7 +21,7 @@ export default function ConnectionActivity() {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   useEffect(() => {
-    trackPageView('linkedin-activity');
+    trackPageView('Workshop Connection Activity');
     const storedName = localStorage.getItem('xapiUserName');
     if (storedName) {
       setUserName(storedName);
@@ -69,6 +69,9 @@ export default function ConnectionActivity() {
     };
 
     const success = await sendXAPIStatement(statement);
+
+
+
     if (success) {
       setIsSubmitted(true);
       setError('');
@@ -76,7 +79,7 @@ export default function ConnectionActivity() {
       setError('Failed to submit your connection. Please try again.');
     }
 
-    trackTaskCompleted('linkedin-activity');
+    trackTaskCompleted('Workshop Connection Activity');
   };
 
   if (isSubmitted) {

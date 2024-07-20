@@ -4,7 +4,7 @@ import React from 'react';
 import { useXAPIData } from '@/hooks/useXAPIData';
 import ExperienceLevel from './components/experience';
 import EmojiComparison from './components/emoji';
-import LinkedInConnection from './components/linkedin';
+import NetworkingMethods from './components/networking';
 import Chatbox from './components/chatbox';
 import PageView from "./components/pageview"
 import Task from "./components/taskCompletion"
@@ -38,7 +38,7 @@ export default function WorkshopDashboard() {
           <Chatbox data={filterStatements("http://adlnet.gov/expapi/verbs/commented", "http://example.com/xapi-workshop/chatbox")} />
         </div>
         <div className="col-span-1">
-          <LinkedInConnection data={filterStatements("http://adlnet.gov/expapi/verbs/connected", "http://example.com/xapi-workshop/connection-activity")} />
+          <NetworkingMethods data={filterStatements("http://adlnet.gov/expapi/verbs/connected", "http://example.com/xapi-workshop/connection-activity")} />
         </div>
       </div>
       

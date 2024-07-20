@@ -18,6 +18,9 @@ export interface XAPIStatement {
   };
   result: {
     response: string;
+    extensions?: {
+      [key: string]: string;
+    }
   };
 }
 

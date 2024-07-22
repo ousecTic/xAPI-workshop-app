@@ -19,15 +19,17 @@ export default function Chatbox() {
   const [error, setError] = useState<string>('');
   const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isAtBottom, setIsAtBottom] = useState<boolean>(true);
 
   const chatBoxRef = useRef<HTMLDivElement>(null);
+  const lastMessageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     trackPageView('chatbox-activity');
     const storedName = localStorage.getItem('xapiUserName');
     if (storedName) {
       setUserName(storedName);
-    }else {
+    } else {
       setIsModalOpen(true);
     }
   }, []);
@@ -40,10 +42,17 @@ export default function Chatbox() {
   }, [userName]);
 
   useEffect(() => {
-    if (chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    if (isAtBottom && lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages]);
+  }, [messages, isAtBottom]);
+
+  const handleScroll = () => {
+    if (chatBoxRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = chatBoxRef.current;
+      setIsAtBottom(scrollTop + clientHeight >= scrollHeight - 10);
+    }
+  };
 
   const handleNameSubmit = (name: string) => {
     setUserName(name);
@@ -102,6 +111,7 @@ export default function Chatbox() {
     if (success) {
       setInputMessage('');
       setHasSubmitted(true);
+      setIsAtBottom(true);
       pollMessages(); // Immediately poll for new messages
     } else {
       setError('Failed to send message. Please try again.');
@@ -118,17 +128,22 @@ export default function Chatbox() {
       <div className="mb-4 p-4 border rounded-md bg-blue-50">
         <p className="font-bold text-lg">Chatbox Activity Rules:</p>
         <div className="text-gray-700 mt-2">
-        <p className="mb-2">1. Introduce yourself with your name, profession, and what you hope to gain from this workshop.</p>
-        <p className="mb-2">2. (Optional) Respond to at least one other participant&apos;s introduction to find common interests or goals.</p>
+          <p className="mb-2">1. Share your name, role, and what sparked your interest in xAPI!</p>
+          <p className="mb-2">2. (Optional) Comment on someone else&apos;s message! Do you share their curiosity? Have you had similar experiences?</p>
         </div>
       </div>
 
       <div 
         ref={chatBoxRef}
         className="border rounded-md p-4 h-80 overflow-y-auto mb-4"
+        onScroll={handleScroll}
       >
-        {messages.map((message) => (
-          <div key={message.id} className="mb-2">
+        {messages.map((message, index) => (
+          <div 
+            key={message.id} 
+            className="mb-2"
+            ref={index === messages.length - 1 ? lastMessageRef : null}
+          >
             <span className="font-bold">{message.sender}: </span>
             <span>{message.content}</span>
             <span className="text-xs text-gray-500 ml-2">{message.timestamp}</span>

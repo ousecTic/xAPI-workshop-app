@@ -97,13 +97,23 @@ export default function ConnectionActivity() {
       <Modal isOpen={isModalOpen} onNameSubmit={handleNameSubmit} />
       <h2 className="text-2xl font-bold mb-6">Workshop Connection Activity</h2>
       <div className="mb-6">
-        <h3 className="text-xl font-semibold mb-2">Instructions:</h3>
-        <ol className="list-decimal list-inside space-y-2">
-          <li>Find someone you haven&apos;t met before.</li>
-          <li>Introduce yourself and learn about them.</li>
-          <li>Connect via LinkedIn, email, phone, or another method.</li>
-          <li>Enter their name and how you connected below.</li>
-        </ol>
+      <div className="p-4 bg-white rounded-lg shadow">
+  <h2 className="text-xl font-bold mb-4">Instructions:</h2>
+  <ol className="list-decimal list-outside space-y-4 ml-6">
+    <li>Find someone you haven&apos;t met yet.</li>
+    <li>
+      Introduce yourself and learn about them.
+      <p className="mt-2 mb-1">Here are some starter questions:</p>
+      <ul className="list-disc list-inside space-y-1 ml-4">
+        <li>Working on any exciting projects recently?</li>
+        <li>What was the highlight of your day?</li>
+        <li>Working on any personal passion projects?</li>
+      </ul>
+    </li>
+    <li>Connect via <span className="text-blue-600">LinkedIn</span>, <span className="text-blue-600">email</span>, <span className="text-blue-600">phone</span>, or another method.</li>
+    <li>Enter their name and how you connected below.</li>
+  </ol>
+</div>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

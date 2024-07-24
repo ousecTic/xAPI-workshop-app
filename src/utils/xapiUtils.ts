@@ -1,9 +1,9 @@
 import XAPI, {GetStatementsParamsWithoutAttachments} from '@xapi/xapi';
 
 const XAPI_CONFIG = {
-  endpoint: "https://cloud.scorm.com/lrs/VVLN0EBSY7/sandbox/",
-  username: "7tAH6PkExw2tIM-yfrU",
-  password: "3f_DDfKPN9I9PqU_1H4"
+  endpoint: process.env.XAPI_ENDPOINT as string,
+  username: process.env.XAPI_USERNAME as string,
+  password: process.env.XAPI_PASSWORD as string
 };
 
 const xapiInstance = new XAPI({

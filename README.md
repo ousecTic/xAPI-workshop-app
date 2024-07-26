@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project originated from a workshop conducted at the IEEE ICICLE conference. Due to the overwhelmingly positive feedback received, I've decided to make this resource freely available to the public. It serves multiple purposes:
+This project originated from a workshop conducted at the IEEE ICICLE conference. Due to the positive feedback received, I've decided to make this resource freely available to the public. It serves multiple purposes:
 
 1. As a learning tool for anyone interested in understanding xAPI (Experience API).
 2. As a template for educators, trainers, and developers to conduct their own workshops on xAPI.
